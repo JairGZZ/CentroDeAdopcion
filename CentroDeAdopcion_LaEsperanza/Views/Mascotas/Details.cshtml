@@ -1,0 +1,82 @@
+﻿@model CentroDeAdopcion_LaEsperanza.Models.Mascota
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Mascota</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Raza)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Raza)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Edad)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Edad)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tamaño)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tamaño)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sexo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sexo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EstadoSalud)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EstadoSalud)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Foto)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.Foto))
+            {
+                <img src="@Model.Foto" alt="Foto de @Model.Nombre" class="img-thumbnail" style="max-width: 200px; height: auto;" />
+            }
+            else
+            {
+                <span>No hay foto disponible</span>
+            }
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdPropietarioNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdPropietarioNavigation.IdUsuario)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdMascota">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

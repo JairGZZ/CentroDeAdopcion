@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CentroDeAdopcion_LaEsperanza.Models.Adopcione>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaSolicitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAdoptanteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMascotaNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAdoptanteNavigation.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMascotaNavigation.IdMascota)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAdopcion">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAdopcion">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAdopcion">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
