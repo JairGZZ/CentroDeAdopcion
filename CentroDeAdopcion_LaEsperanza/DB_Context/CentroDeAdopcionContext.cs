@@ -20,6 +20,8 @@ public partial class CentroDeAdopcionContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
+            
+
             var connectionString = _configuration.GetConnectionString("CentroDeAdopcionContext");
             optionsBuilder.UseSqlServer(connectionString);
         }

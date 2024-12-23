@@ -24,7 +24,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
             if (!String.IsNullOrEmpty(buscar))
             {
-                listar = listar.Where(b => b.Nombre.Contains(buscar));
+                listar = listar.Where(b => b.Nombre.Contains(buscar) || b.Apellido.Contains(buscar));
             }
             else
             {
