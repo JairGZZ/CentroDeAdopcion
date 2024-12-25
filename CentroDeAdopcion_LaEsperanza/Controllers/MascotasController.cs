@@ -4,9 +4,11 @@ using CentroDeAdopcion_LaEsperanza.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
+    [Authorize]
     public class MascotasController : Controller
     {
         private readonly CentroDeAdopcionContext _context;

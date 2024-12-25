@@ -1,11 +1,13 @@
 ﻿using CentroDeAdopcion_LaEsperanza.DB_Context;
 using CentroDeAdopcion_LaEsperanza.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
+    [Authorize]
     public class AdopcionesController : Controller
     {
         private readonly CentroDeAdopcionContext _context;

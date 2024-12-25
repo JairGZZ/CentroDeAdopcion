@@ -2,6 +2,7 @@ using CentroDeAdopcion_LaEsperanza.DB_Context;
 using CentroDeAdopcion_LaEsperanza.Services;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,15 @@ builder.Services.AddScoped<CloudinaryService>();
 builder.Services.AddDbContext<CentroDeAdopcionContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CentroDeAdopcionContext")));
 
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/Auth/Login";
+        o.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -37,7 +46,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

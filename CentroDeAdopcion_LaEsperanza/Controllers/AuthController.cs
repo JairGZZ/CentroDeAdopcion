@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
+
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
@@ -54,6 +59,23 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 ViewData["errorUsuarioNoEncontrado"] = "Correo electrónico o contraseña incorrectos";
                 return View();
             }
+
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name,usuario.Nombre)
+
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            AuthenticationProperties properties = new AuthenticationProperties()
+            {
+                AllowRefresh = true
+            };
+
+            await HttpContext.SignInAsync(
+
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity), properties);
 
             if (usuario.Rol == "admin")
             {
@@ -113,6 +135,12 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
 
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
         }
 
 

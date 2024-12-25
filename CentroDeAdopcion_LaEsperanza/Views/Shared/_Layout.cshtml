@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,11 +22,26 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mascotas" asp-action="Index">Lista de Mascotas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Adopcione" asp-action="Index">Ver adopciones</a>
                         </li>
+                        <li class="nav-item" style="align-content :end">
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                                if (!string.IsNullOrEmpty(userName))
+                                {
+                                    <p class="navbar-text" style="text-align: end; margin-right: 50px;"> Hola @userName </p> 
+                                }
+                            }
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Cerrar Sesion</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -39,6 +55,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
+           
             &copy; 2024 - CentroDeAdopcion_LaEsperanza - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
