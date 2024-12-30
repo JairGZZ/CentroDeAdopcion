@@ -13,7 +13,6 @@
         public string Direccion { get; set; }
         public string Rol { get; set; } = null!;
         public string Contrasena { get; set; } = null!;
-
         public string ConfirmarContrasena { get; set; } = null!;
 
 

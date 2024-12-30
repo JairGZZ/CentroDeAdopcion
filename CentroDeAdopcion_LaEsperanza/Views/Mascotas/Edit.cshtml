@@ -23,8 +23,11 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Tipo" class="control-label"></label>
-                            <input asp-for="Tipo" class="form-control" />
+                            <label asp-for="Tipo" class="control-label">Seleccione la especie de la mascota</label>
+                            <select asp-for="Tipo" class="form-control" >
+                                <option value="gato">Gato</option>
+                                <option value="perro">Perro</option>
+                            </select>
                             <span asp-validation-for="Tipo" class="text-danger"></span>
                         </div>
                     </div>
@@ -50,18 +53,26 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Tamaño" class="control-label"></label>
-                            <input asp-for="Tamaño" class="form-control" />
+                            <label asp-for="Tamaño" class="control-label">Seleccione el tamaño de la mascota</label>
+                            <select asp-for="Tamaño" class="form-control" >
+                                <option value="pequeño">Pequeño</option>
+                                <option value="mediano">Mediano</option>
+                                <option value="grande">Grande</option>
+                            </select>
                             <span asp-validation-for="Tamaño" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Sexo" class="control-label"></label>
-                            <input asp-for="Sexo" class="form-control" />
+                            <label asp-for="Sexo" class="control-label">Seleccione el sexo de la mascota</label>
+                            <select asp-for="Sexo" class="form-control">
+                                <option value="macho">Macho</option>
+                                <option value="hembra">Hembra</option>
+                            </select>
                             <span asp-validation-for="Sexo" class="text-danger"></span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="row">

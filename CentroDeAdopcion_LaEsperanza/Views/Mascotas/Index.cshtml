@@ -10,12 +10,10 @@
 
 
     <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
             font-family: 'Jost', sans-serif;
-            color: #fff;
             padding: 0;
             margin: 0;
         }
@@ -23,7 +21,41 @@
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #fff;
+        }
+
+    
+
+
+    .search {
+        position: relative;
+        box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+    }
+
+        .search input {
+            height: 60px;
+            text-indent: 25px;
+            border: 2px solid #d6d4d4;
+        }
+
+
+            .search input:focus {
+                box-shadow: none;
+                border: 2px solid blue;
+            }
+
+        .search .fa-search {
+            position: absolute;
+            top: 20px;
+            left: 16px;
+        }
+
+        .search button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height: 50px;
+            width: 110px;
+            background: #573b8a;
         }
 
         .container {
@@ -91,12 +123,19 @@
         <h1>Listado de Mascotas</h1>
 
         <form asp-controller="Mascotas" asp-action="Index">
-            <p>
-                <input type="text" name="buscar" />
-                <input type="submit" value="Buscar" />
+        <div class="row height d-flex justify-content-center align-items-center">
 
+            <div class="col-md-8">
 
-            </p>
+                <div class="search">
+                    <i class="fa fa-search"></i>
+                    <input type="text" name="buscar" class="form-control" placeholder="Buscar por tipo o sexo......">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+
+            </div>
+
+        </div>
 
         </form>
 
@@ -109,7 +148,8 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>@Html.DisplayNameFor(model => model.Foto)</th>
+
+                    <th>@Html.DisplayNameFor(model => model.Foto)</th>
 
                         <th>@Html.DisplayNameFor(model => model.Nombre)</th>
                         <th>@Html.DisplayNameFor(model => model.Tipo)</th>
@@ -161,4 +201,3 @@
 
     
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

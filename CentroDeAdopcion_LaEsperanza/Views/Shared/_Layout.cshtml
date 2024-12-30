@@ -11,9 +11,10 @@
 </head>  
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-               <img src="~/imagenes/logo.jpeg" width="100px" height="60px" style="border-radius= 50px" />
+                <img src="~/imagenes/logo.jpeg" width="100px" height="60px" style="border-radius: 50px;" />
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -25,28 +26,49 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Mascotas" asp-action="Index">Lista de Mascotas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Adopcione" asp-action="Index">Ver adopciones</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Adopciones" asp-action="Index">Ver adopciones</a>
                         </li>
-                        <li class="nav-item" style="align-content :end">
-                            @if (User.Identity != null && User.Identity.IsAuthenticated)
-                            {
-                                var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
-                                if (!string.IsNullOrEmpty(userName))
-                                {
-                                    <p class="navbar-text" style="text-align: end; margin-right: 50px;"> Hola @userName </p> 
-                                }
-                            }
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Cerrar Sesion</a>
-                        </li>
-
                     </ul>
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            var userName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+                            if (!string.IsNullOrEmpty(userName))
+                            {
+                                <li class="nav-item">
+                                    <span class="navbar-text text-dark">Hola, @userName</span>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @await Component.InvokeAsync("ProfilePicture")
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li>
+                                    <form id="uploadProfilePictureForm" asp-controller="Account" asp-action="ChangeProfilePicture"
+                                          enctype="multipart/form-data" method="post" style="display: none;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="file" id="profilePictureInput" name="fotoFile"
+                                               accept="image/*" onchange="submitProfilePictureForm()" />
+                                    </form>
+                                    <a class="dropdown-item" href="#" onclick="document.getElementById('profilePictureInput').click()">
+                                        Cambiar foto de perfil
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/Account/Logout">Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
                 </div>
             </div>
         </nav>
+         
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

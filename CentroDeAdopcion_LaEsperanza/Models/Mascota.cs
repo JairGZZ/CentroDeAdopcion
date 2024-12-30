@@ -1,4 +1,6 @@
-﻿namespace CentroDeAdopcion_LaEsperanza.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CentroDeAdopcion_LaEsperanza.Models;
 
 public partial class Mascota
 {
@@ -10,8 +12,9 @@ public partial class Mascota
 
     public string? Raza { get; set; }
 
+   [Required(ErrorMessage = "La edad es obligatoria.")]
+    [Range(1, 19, ErrorMessage = "La edad debe ser mayor a 0 y menor a 20.")]
     public int? Edad { get; set; }
-
     public string? Tamaño { get; set; }
 
     public string? Sexo { get; set; }

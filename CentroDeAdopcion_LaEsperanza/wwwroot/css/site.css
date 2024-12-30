@@ -20,3 +20,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+
+
+
+.navbar .dropdown-menu {
+    min-width: 200px;
+}
+
+    .navbar .dropdown-menu a {
+        text-decoration: none;
+    }
+
+.navbar img.rounded-circle {
+    border: 2px solid #fff;
+    object-fit: cover;
+}

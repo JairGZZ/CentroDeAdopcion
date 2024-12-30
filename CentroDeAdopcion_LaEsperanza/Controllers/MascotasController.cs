@@ -26,7 +26,8 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             var centroDeAdopcionContext = _context.Mascotas.Include(m => m.IdPropietarioNavigation).AsQueryable();
             if (!String.IsNullOrEmpty(buscar))
             {
-                centroDeAdopcionContext = centroDeAdopcionContext.Where(b => b.Tipo.Contains(buscar) || b.Sexo.Contains(buscar));
+                buscar = buscar.Trim();
+                centroDeAdopcionContext = centroDeAdopcionContext.Where(b => b.Tipo.Contains(buscar) || b.Sexo!.Contains(buscar));
             }
 
             return View(await centroDeAdopcionContext.ToListAsync());
@@ -173,6 +174,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             return View(mascota);
         }
 
+    
         // POST: Mascotas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

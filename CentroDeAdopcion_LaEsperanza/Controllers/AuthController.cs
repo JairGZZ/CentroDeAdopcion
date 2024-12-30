@@ -30,7 +30,16 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
 
         public IActionResult Login()
+
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                // aqui le puedo redireccionar a otro lado si tiene sesion activa para que no le muestre la vista de login
+
+                //no lo hago pq aun quiero implementar bien la gestion de roles 
+
+               // return RedirectToAction("Mascotas")
+            }
             return View();
         }
 
@@ -59,14 +68,22 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 ViewData["errorUsuarioNoEncontrado"] = "Correo electrónico o contraseña incorrectos";
                 return View();
             }
+         //   string profilePictureUrl = "/Imagenes/user.png"; // Usa la URL predeterminada si no hay una foto
 
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name,usuario.Nombre)
+                new Claim(ClaimTypes.Name,usuario.Nombre),
+                new Claim(ClaimTypes.Email,usuario.Email),
+                new Claim(ClaimTypes.Role,usuario.Rol),
+              //  new Claim("ProfilePicture",profilePictureUrl)
+
+
 
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+
             AuthenticationProperties properties = new AuthenticationProperties()
             {
                 AllowRefresh = true

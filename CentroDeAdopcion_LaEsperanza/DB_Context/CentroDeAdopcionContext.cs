@@ -129,6 +129,11 @@ public partial class CentroDeAdopcionContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
+            entity.Property(e => e.FotoUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("FotoUrl");
+
         });
 
         OnModelCreatingPartial(modelBuilder);

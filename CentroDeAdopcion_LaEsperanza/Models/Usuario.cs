@@ -18,7 +18,11 @@ public partial class Usuario
 
     public string Contrasena { get; set; } = null!;
 
+    public string? FotoUrl { get; set; }
+
     public virtual ICollection<Adopcione> Adopciones { get; set; } = new List<Adopcione>();
 
     public virtual ICollection<Mascota> Mascota { get; set; } = new List<Mascota>();
 }
+
+  

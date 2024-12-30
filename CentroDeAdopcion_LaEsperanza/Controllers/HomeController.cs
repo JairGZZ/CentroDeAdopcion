@@ -1,9 +1,11 @@
 using CentroDeAdopcion_LaEsperanza.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
