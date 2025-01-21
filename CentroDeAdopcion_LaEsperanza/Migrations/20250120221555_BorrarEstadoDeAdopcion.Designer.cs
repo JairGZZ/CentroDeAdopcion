@@ -4,6 +4,7 @@ using CentroDeAdopcion_LaEsperanza.DB_Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CentroDeAdopcion_LaEsperanza.Migrations
 {
     [DbContext(typeof(CentroDeAdopcionContext))]
-    partial class CentroDeAdopcionContextModelSnapshot : ModelSnapshot
+    [Migration("20250120221555_BorrarEstadoDeAdopcion")]
+    partial class BorrarEstadoDeAdopcion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +33,10 @@ namespace CentroDeAdopcion_LaEsperanza.Migrations
                         .HasColumnName("id_adopcion");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAdopcion"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("FechaSolicitud")
                         .ValueGeneratedOnAdd()
@@ -67,12 +74,6 @@ namespace CentroDeAdopcion_LaEsperanza.Migrations
                     b.Property<int>("Edad")
                         .HasColumnType("int")
                         .HasColumnName("edad");
-
-                    b.Property<string>("Estado")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("estado");
 
                     b.Property<string>("EstadoSalud")
                         .HasMaxLength(100)

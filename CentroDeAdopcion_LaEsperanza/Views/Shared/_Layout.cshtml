@@ -1,4 +1,6 @@
 ﻿@using System.Security.Claims;
+@using Microsoft.AspNetCore.Identity;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,21 +14,33 @@
 <body>
     <header>
 
-      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <img src="~/imagenes/logo.jpeg" width="100px" height="60px" style="border-radius: 50px;" />
+                <img src="~/logo.jpeg" width="100px" height="60px" style="border-radius: 50px;" />
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mascotas" asp-action="Index">Lista de Mascotas</a>
-                        </li>
+                        @if (User.IsInRole("admin") || User.IsInRole("adoptante"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Mascotas" asp-action="Index">Lista de Mascotas</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("admin") || User.IsInRole("adoptante"))
+                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Adopciones" asp-action="Index">Ver adopciones</a>
+                        </li>
+
+                        }
+
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">fdsgdfssdbg</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto align-items-center">
@@ -57,7 +71,7 @@
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/Account/Logout">Cerrar sesión</a></li>
+                                <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>

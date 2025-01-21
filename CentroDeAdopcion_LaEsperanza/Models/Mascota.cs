@@ -21,9 +21,14 @@ public partial class Mascota
 
     public string? EstadoSalud { get; set; }
 
+    public string? Estado { get; set; }
+
+
     public string? Foto { get; set; }
 
     public int? IdPropietario { get; set; }
+
+
 
     public virtual ICollection<Adopcione> Adopciones { get; set; } = new List<Adopcione>();
 

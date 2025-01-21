@@ -18,28 +18,14 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
     {
         private readonly CentroDeAdopcionContext _context;
         private readonly PasswordHasher<Usuario> _passwordHasher;
-
-
-
         public AuthController(CentroDeAdopcionContext context)
         {
             _context = context;
             _passwordHasher = new PasswordHasher<Usuario>();
 
         }
-
-
         public IActionResult Login()
-
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                // aqui le puedo redireccionar a otro lado si tiene sesion activa para que no le muestre la vista de login
-
-                //no lo hago pq aun quiero implementar bien la gestion de roles 
-
-               // return RedirectToAction("Mascotas")
-            }
             return View();
         }
 
@@ -52,8 +38,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 return View();
             }
 
-            var usuario = await _context.Usuarios
-     .FirstOrDefaultAsync(u => u.Email == viewmodel.Email);
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == viewmodel.Email);
 
             if (usuario == null)
             {
@@ -75,10 +60,8 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 new Claim(ClaimTypes.Name,usuario.Nombre),
                 new Claim(ClaimTypes.Email,usuario.Email),
                 new Claim(ClaimTypes.Role,usuario.Rol),
+                new Claim(ClaimTypes.NameIdentifier,usuario.IdUsuario.ToString())
               //  new Claim("ProfilePicture",profilePictureUrl)
-
-
-
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -94,7 +77,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity), properties);
 
-            if (usuario.Rol == "admin")
+            if (usuario.Rol =="admin")
             {
 
                 return RedirectToAction("Index", "Usuarios");
@@ -103,12 +86,12 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             {
                 return RedirectToAction("Index", "Mascotas");
             }
-            else if (usuario.Rol == "propietario")
+            else if (usuario.Rol =="propietario")
             {
 
                 return RedirectToAction("Index", "Mascotas");
             }
-            return View();
+            return RedirectToAction("Login");
 
         }
 

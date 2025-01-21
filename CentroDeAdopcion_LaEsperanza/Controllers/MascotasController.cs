@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
+
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="adoptante")]
     public class MascotasController : Controller
     {
         private readonly CentroDeAdopcionContext _context;
@@ -20,15 +23,14 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             _cloudinaryService = cloudinaryService;
         }
 
-        // GET: Mascotas
         public async Task<IActionResult> Index(string buscar)
         {
-            var centroDeAdopcionContext = _context.Mascotas.Include(m => m.IdPropietarioNavigation).AsQueryable();
+            var centroDeAdopcionContext = _context.Mascotas.Include(m => m.IdPropietarioNavigation).Where(a => a.Estado == "Disponible").AsQueryable();
             if (!String.IsNullOrEmpty(buscar))
             {
                 buscar = buscar.Trim();
                 centroDeAdopcionContext = centroDeAdopcionContext.Where(b => b.Tipo.Contains(buscar) || b.Sexo!.Contains(buscar));
-            }
+            } 
 
             return View(await centroDeAdopcionContext.ToListAsync());
         }
@@ -55,18 +57,28 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
         // GET: Mascotas/Create
         public IActionResult Create()
         {
+
             ViewData["IdPropietario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre");
 
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdMascota,Nombre,Tipo,Raza,Edad,Tamaño,Sexo,EstadoSalud,Foto,IdPropietario")] Mascota mascota, IFormFile fotoFile)
+        public async Task<IActionResult> Create([Bind("IdMascota,Nombre,Tipo,Raza,Edad,Tamaño,Sexo,EstadoSalud,Foto,Estado")] Mascota mascota, IFormFile fotoFile)
         {
             if (ModelState.IsValid)
             {
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                var propietario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == userEmail);
+                if (propietario == null)
+                {
+                    return BadRequest("El propietario no fue encontrado.");
+                }
+
+                mascota.IdPropietario = propietario.IdUsuario;
+
                 if (fotoFile != null && fotoFile.Length > 0)
                 {
                     var imageUrl = await _cloudinaryService.UploadImageToCloudinary(fotoFile);
@@ -80,10 +92,10 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdPropietario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", mascota.IdPropietario);
+
+            // Si hay errores de validación, devuelve la vista con los datos actuales
             return View(mascota);
         }
-
 
         // GET: Mascotas/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -98,12 +110,14 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdPropietario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", mascota.IdPropietario);
+
             return View(mascota);
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdMascota,Nombre,Tipo,Raza,Edad,Tamaño,Sexo,EstadoSalud,Foto,IdPropietario")] Mascota mascota, IFormFile fotoFile)
+        public async Task<IActionResult> Edit(int id, [Bind("IdMascota,Nombre,Tipo,Raza,Edad,Tamaño,Sexo,EstadoSalud,Foto")] Mascota mascota, IFormFile? fotoFile)
         {
             if (id != mascota.IdMascota)
             {
@@ -112,46 +126,54 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
             if (ModelState.IsValid)
             {
+                var existingMascota = await _context.Mascotas
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.IdMascota == id);
+
+                if (existingMascota == null)
+                {
+                    return NotFound();
+                }
+
+                mascota.IdPropietario = existingMascota.IdPropietario;
+
+                if (fotoFile != null && fotoFile.Length > 0)
+                {
+                    var imageUrl = await _cloudinaryService.UploadImageToCloudinary(fotoFile);
+                    if (imageUrl != null)
+                    {
+                        mascota.Foto = imageUrl;
+                    }
+                }
+                else
+                {
+                    mascota.Foto = existingMascota.Foto;
+                }
+
                 try
                 {
-                    if (fotoFile != null && fotoFile.Length > 0)
-                    {
-                        var imageUrl = await _cloudinaryService.UploadImageToCloudinary(fotoFile);
-                        if (imageUrl != null)
-                        {
-                            mascota.Foto = imageUrl;
-                        }
-                    }
-                    else
-                    {
-                        var existingMascota = await _context.Mascotas.AsNoTracking().FirstOrDefaultAsync(m => m.IdMascota == id);
-                        if (existingMascota != null)
-                        {
-                            mascota.Foto = existingMascota.Foto;  
-                        }
-                    }
-
-                    _context.Update(mascota); 
-                    await _context.SaveChangesAsync(); 
-
-                    return RedirectToAction(nameof(Index));  
+                    _context.Update(mascota);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!MascotaExists(mascota.IdMascota))
                     {
-                        return NotFound();  
+                        return NotFound();
                     }
                     else
                     {
-                        throw; 
+                        throw;
                     }
                 }
+
+                return RedirectToAction(nameof(Index));
             }
 
             ViewData["IdPropietario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", mascota.IdPropietario);
-            return View(mascota); 
+            return View(mascota);
         }
+
 
 
 

@@ -12,20 +12,6 @@ public partial class CentroDeAdopcionContext : DbContext
     {
         _configuration = configuration;
     }
-
-
-
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            
-
-            var connectionString = _configuration.GetConnectionString("CentroDeAdopcionContext");
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-    }
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Adopcione> Adopciones { get; set; }
     public DbSet<Mascota> Mascotas { get; set; }
@@ -43,6 +29,8 @@ public partial class CentroDeAdopcionContext : DbContext
                 .HasColumnName("fecha_solicitud");
             entity.Property(e => e.IdAdoptante).HasColumnName("id_adoptante");
             entity.Property(e => e.IdMascota).HasColumnName("id_mascota");
+
+          
 
             entity.HasOne(d => d.IdAdoptanteNavigation).WithMany(p => p.Adopciones)
                 .HasForeignKey(d => d.IdAdoptante)
@@ -63,6 +51,8 @@ public partial class CentroDeAdopcionContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("estado_salud");
+
+         
             entity.Property(e => e.Foto)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -89,9 +79,19 @@ public partial class CentroDeAdopcionContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("tipo");
 
+            entity.Property(e => e.Estado)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("estado")
+                .HasDefaultValue("Disponible");
+
+
+
             entity.HasOne(d => d.IdPropietarioNavigation).WithMany(p => p.Mascota)
                 .HasForeignKey(d => d.IdPropietario)
                 .HasConstraintName("FK__Mascotas__id_pro__3E52440B");
+
+           
         });
 
         modelBuilder.Entity<Usuario>(entity =>

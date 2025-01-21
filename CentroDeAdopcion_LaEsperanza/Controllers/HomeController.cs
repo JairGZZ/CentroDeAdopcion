@@ -16,7 +16,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
         }
 
         public IActionResult Index()
-        {
+        { 
             return View();
         }
 

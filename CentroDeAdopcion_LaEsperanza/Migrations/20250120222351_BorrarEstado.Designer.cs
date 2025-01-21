@@ -4,6 +4,7 @@ using CentroDeAdopcion_LaEsperanza.DB_Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CentroDeAdopcion_LaEsperanza.Migrations
 {
     [DbContext(typeof(CentroDeAdopcionContext))]
-    partial class CentroDeAdopcionContextModelSnapshot : ModelSnapshot
+    [Migration("20250120222351_BorrarEstado")]
+    partial class BorrarEstado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,10 +72,10 @@ namespace CentroDeAdopcion_LaEsperanza.Migrations
                         .HasColumnName("edad");
 
                     b.Property<string>("Estado")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("estado");
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Estado");
 
                     b.Property<string>("EstadoSalud")
                         .HasMaxLength(100)

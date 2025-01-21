@@ -19,21 +19,21 @@ var cloudinary = new Cloudinary(new Account(
 builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped<CloudinaryService>();
 
-
-
 builder.Services.AddDbContext<CentroDeAdopcionContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CentroDeAdopcionContext")));
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(o =>
+    .AddCookie(middleware =>
     {
-        o.LoginPath = "/Auth/Login";
-        o.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        middleware.LoginPath = "/Auth/Login";
+        middleware.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     });
+
+
 var app = builder.Build();
 
-app.UseStatusCodePages(async context =>
+app.UseStatusCodePages( context =>
 {
     var response = context.HttpContext.Response;
 
@@ -42,15 +42,13 @@ app.UseStatusCodePages(async context =>
     {
         response.Redirect("/NotFound/NotFoundPage");
     }
+    return Task.CompletedTask;
+
+
 });
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseStatusCodePagesWithRedirects("/NotFound/NotFoundPage");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-  //  app.UseHsts();
-}
+
 
 //app.UseHttpsRedirection();
 app.UseStaticFiles();

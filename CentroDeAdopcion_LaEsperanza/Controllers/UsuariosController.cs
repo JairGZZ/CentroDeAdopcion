@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="admin")]
     public class UsuariosController : Controller
     {
         private readonly CentroDeAdopcionContext _context;
@@ -37,9 +37,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
             return View(await listar.ToListAsync());
         }
-
-
-
+        
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {

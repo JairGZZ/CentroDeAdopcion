@@ -13,15 +13,21 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FechaSolicitud)
+                Fecha de Solicitud
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdAdoptanteNavigation)
+                Nombre del Propietario
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdMascotaNavigation)
+                Nombre de la Mascota
             </th>
-            <th></th>
+            <th>
+                Raza
+             </th>
+            <th>
+                Edad
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -31,11 +37,17 @@
                 @Html.DisplayFor(modelItem => item.FechaSolicitud)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdAdoptanteNavigation.IdUsuario)
+                @Html.DisplayFor(modelItem => item.IdAdoptanteNavigation.Nombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdMascotaNavigation.IdMascota)
+                @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Nombre)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Raza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Edad)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdAdopcion">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.IdAdopcion">Details</a> |

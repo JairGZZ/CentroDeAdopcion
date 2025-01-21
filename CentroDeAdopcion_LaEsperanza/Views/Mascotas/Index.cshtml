@@ -1,6 +1,4 @@
 ﻿    @using System.Security.Claims;
-
-
 @model IEnumerable<CentroDeAdopcion_LaEsperanza.Models.Mascota>
 
 
@@ -185,12 +183,18 @@
                             <td>@Html.DisplayFor(modelItem => item.Tamaño)</td>
                             <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
                             <td>@Html.DisplayFor(modelItem => item.EstadoSalud)</td>
-                            
                             <td>@Html.DisplayFor(modelItem => item.IdPropietarioNavigation.Nombre)</td>
+
                             <td class="actions">
-                                <a asp-action="Edit" asp-route-id="@item.IdMascota" class="btn btn-warning btn-sm">Editar</a> |
+                                <a asp-action="Edit"   asp-route-id="@item.IdMascota" class="btn btn-warning btn-sm">Editar</a> |
                                 <a asp-action="Details" asp-route-id="@item.IdMascota" class="btn btn-info btn-sm">Detalles</a> |
-                                <a asp-action="Delete" asp-route-id="@item.IdMascota" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</a>
+                                <a asp-action="Delete" asp-route-id="@item.IdMascota" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</a> |
+                            <form asp-action="Create" asp-controller="Adopciones" method="post">
+                                <input type="hidden" name="id" value="@item.IdMascota" />
+                                <button type="submit" class="btn btn-light me-2">Adoptar</button>
+                            </form>
+
+
                             </td>
                         </tr>
                     }

@@ -30,17 +30,21 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             }
 
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
             if (string.IsNullOrEmpty(userEmail))
             {
                 return BadRequest("Usuario no autenticado.");
             }
 
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == userEmail);
+            
             if (usuario == null)
             {
                 return BadRequest("Usuario no encontrado.");
             }
+
             var imageUrl = await _cloudinaryService.UploadImageToCloudinary(fotoFile);
+
             if (string.IsNullOrEmpty(imageUrl))
             {
                 return BadRequest("No se pudo subir la imagen. Inténtalo nuevamente.");
@@ -57,6 +61,8 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error: {ex.Message}");
+
                 return BadRequest("Error al guardar la imagen en la base de datos.");
             }
         }

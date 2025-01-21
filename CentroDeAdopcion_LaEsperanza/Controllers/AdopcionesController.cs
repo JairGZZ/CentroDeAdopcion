@@ -4,23 +4,30 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
-    [Authorize]
+    [Authorize (Roles ="propietario,adoptante")]
     public class AdopcionesController : Controller
     {
         private readonly CentroDeAdopcionContext _context;
 
         public AdopcionesController(CentroDeAdopcionContext context)
         {
+
             _context = context;
+
         }
 
-        // GET: Adopciones
+
         public async Task<IActionResult> Index()
         {
-            var centroDeAdopcionContext = _context.Adopciones.Include(a => a.IdAdoptanteNavigation).Include(a => a.IdMascotaNavigation);
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;           
+            var centroDeAdopcionContext = _context.Adopciones.
+                Include(a => a.IdMascotaNavigation)
+                .Where(i => i.IdAdoptante.ToString() == id);
+
             return View(await centroDeAdopcionContext.ToListAsync());
         }
 
@@ -44,30 +51,39 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             return View(adopcione);
         }
 
-        // GET: Adopciones/Create
-        public IActionResult Create()
-        {
-            ViewData["IdAdoptante"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario");
-            ViewData["IdMascota"] = new SelectList(_context.Mascotas, "IdMascota", "IdMascota");
-            return View();
-        }
-
-        // POST: Adopciones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+  
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAdopcion,IdMascota,IdAdoptante,FechaSolicitud")] Adopcione adopcione)
+        public async Task<IActionResult> Create(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return NotFound();
+            }
+
+            var adopcion = new Adopcione()
+            {
+                IdMascota = id,
+                IdAdoptante = int.Parse(userId),
+                FechaSolicitud = DateTime.Now
+            };
+
             if (ModelState.IsValid)
             {
-                _context.Add(adopcione);
+                _context.Add(adopcion);
+                var animal = await _context.Mascotas.FindAsync(id);
+                if (animal != null)
+                {
+                    animal.Estado = "Adoptado";
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdAdoptante"] = new SelectList(_context.Usuarios, "IdUsuario", "IdUsuario", adopcione.IdAdoptante);
-            ViewData["IdMascota"] = new SelectList(_context.Mascotas, "IdMascota", "IdMascota", adopcione.IdMascota);
-            return View(adopcione);
+           
+            return RedirectToAction("Index","Adopciones");
         }
 
         // GET: Adopciones/Edit/5
