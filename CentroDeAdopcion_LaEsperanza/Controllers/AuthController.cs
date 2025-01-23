@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
+ 
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -18,18 +18,20 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
     {
         private readonly CentroDeAdopcionContext _context;
         private readonly PasswordHasher<Usuario> _passwordHasher;
-        public AuthController(CentroDeAdopcionContext context)
+        public AuthController(CentroDeAdopcionContext context, PasswordHasher<Usuario> passwordHasher)
         {
-            _context = context;
-            _passwordHasher = new PasswordHasher<Usuario>();
-
+            _context = context ;
+            _passwordHasher = passwordHasher;
         }
+
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Login(UsuarioViewModel viewmodel)
         {
             if (viewmodel.Email.IsNullOrEmpty() || viewmodel.Contrasena.IsNullOrEmpty())
@@ -89,7 +91,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             else if (usuario.Rol =="propietario")
             {
 
-                return RedirectToAction("Index", "Mascotas");
+                return RedirectToAction("ListarMascotasPropietario", "Mascotas");
             }
             return RedirectToAction("Login");
 
@@ -101,6 +103,8 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Register(UsuarioViewModel viewmodel)
 
         {
@@ -142,7 +146,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
-
+       
 
     }
 }

@@ -1,0 +1,181 @@
+﻿    @using System.Security.Claims;
+@model IEnumerable<CentroDeAdopcion_LaEsperanza.Models.Mascota>
+
+
+@{
+    ViewData["Title"] = "Listado de Mascotas";
+}
+
+
+<title>@ViewData["Title"]</title>
+<style>
+    body {
+        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        font-family: 'Jost', sans-serif;
+        padding: 0;
+        margin: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+
+
+
+    .search {
+        position: relative;
+        box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+    }
+
+        .search input {
+            height: 60px;
+            text-indent: 25px;
+            border: 2px solid #d6d4d4;
+        }
+
+
+            .search input:focus {
+                box-shadow: none;
+                border: 2px solid blue;
+            }
+
+        .search .fa-search {
+            position: absolute;
+            top: 20px;
+            left: 16px;
+        }
+
+        .search button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            height: 50px;
+            width: 110px;
+            background: #573b8a;
+        }
+
+    .container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        background-color: #573b8a;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        padding: 12px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #6d44b8;
+        }
+
+    .table {
+        background: #fff;
+        border-radius: 8px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .table thead {
+            background-color: #573b8a;
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .img-thumbnail {
+        max-width: 100px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+    }
+
+        .actions a {
+            margin: 0 5px;
+            font-size: 14px;
+        }
+</style>
+
+<div class="container">
+    <h1>Mascotas dadas en Adopcion</h1>
+
+        <div class="d-flex justify-content-between mb-4">
+            <a asp-action="Create" class="btn btn-primary">Crear Nueva Mascota</a>
+        </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+
+                    <th>@Html.DisplayNameFor(model => model.Foto)</th>
+                    <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Raza)</th>
+                    <th>@Html.DisplayNameFor(model => model.Edad)</th>
+                    <th>@Html.DisplayNameFor(model => model.Tamaño)</th>
+                    <th>@Html.DisplayNameFor(model => model.Sexo)</th>
+                    <th>@Html.DisplayNameFor(model => model.EstadoSalud)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Foto))
+                            {
+                                <img src="@item.Foto" alt="Foto de @item.Nombre" class="img-thumbnail" />
+                            }
+                            else
+                            {
+                                <span>No disponible</span>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+
+
+                        <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Raza)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Edad)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Tamaño)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.EstadoSalud)</td>
+                        <td class="actions">
+                            
+
+                                <a asp-action="Edit" asp-route-id="@item.IdMascota" class="btn btn-warning btn-sm">Editar</a>
+                                <a asp-action="Delete" asp-route-id="@item.IdMascota" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

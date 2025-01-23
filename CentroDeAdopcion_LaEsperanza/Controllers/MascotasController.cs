@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
-    [Authorize(Roles ="adoptante")]
+    [Authorize(Roles ="adoptante,propietario,admin")]
     public class MascotasController : Controller
     {
         private readonly CentroDeAdopcionContext _context;
@@ -22,6 +22,8 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             _context = context;
             _cloudinaryService = cloudinaryService;
         }
+
+        [Authorize(Roles ="adoptante,admin")]
 
         public async Task<IActionResult> Index(string buscar)
         {
@@ -35,24 +37,24 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             return View(await centroDeAdopcionContext.ToListAsync());
         }
 
-        // GET: Mascotas/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Mascotas/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var mascota = await _context.Mascotas
-                .Include(m => m.IdPropietarioNavigation)
-                .FirstOrDefaultAsync(m => m.IdMascota == id);
-            if (mascota == null)
-            {
-                return NotFound();
-            }
+        //    var mascota = await _context.Mascotas
+        //        .Include(m => m.IdPropietarioNavigation)
+        //        .FirstOrDefaultAsync(m => m.IdMascota == id);
+        //    if (mascota == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(mascota);
-        }
+        //    return View(mascota);
+        //}
 
         // GET: Mascotas/Create
         public IActionResult Create()
@@ -70,6 +72,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             if (ModelState.IsValid)
             {
                 var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
 
                 var propietario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == userEmail);
                 if (propietario == null)
@@ -90,11 +93,30 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
                 _context.Add(mascota);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (User.IsInRole("propietario"))
+                {
+                    return RedirectToAction(nameof(ListarMascotasPropietario));
+
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
-            // Si hay errores de validación, devuelve la vista con los datos actuales
             return View(mascota);
+        }
+
+        public async Task<IActionResult> ListarMascotasPropietario()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var centroDeAdopcionContext = _context.Mascotas.Include(m => m.IdPropietarioNavigation)
+                .Where(a => a.Estado == "Disponible" && a.IdPropietario== int.Parse(id))
+                .AsQueryable();
+            return View(await centroDeAdopcionContext.ToListAsync());
+
+
         }
 
         // GET: Mascotas/Edit/5
@@ -117,7 +139,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdMascota,Nombre,Tipo,Raza,Edad,Tamaño,Sexo,EstadoSalud,Foto")] Mascota mascota, IFormFile? fotoFile)
+        public async Task<IActionResult> Edit(int id, [Bind("IdMascota,Nombre,Tipo,Raza,Edad,Tamaño,Sexo,EstadoSalud,Foto,Estado")] Mascota mascota, IFormFile? fotoFile)
         {
             if (id != mascota.IdMascota)
             {
@@ -136,6 +158,8 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                 }
 
                 mascota.IdPropietario = existingMascota.IdPropietario;
+
+                mascota.Estado = existingMascota.Estado;
 
                 if (fotoFile != null && fotoFile.Length > 0)
                 {
@@ -166,8 +190,16 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
                         throw;
                     }
                 }
+                if (User.IsInRole("propietario"))
+                {
+                    return RedirectToAction(nameof(ListarMascotasPropietario));
 
-                return RedirectToAction(nameof(Index));
+
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             ViewData["IdPropietario"] = new SelectList(_context.Usuarios, "IdUsuario", "Nombre", mascota.IdPropietario);

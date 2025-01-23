@@ -3,11 +3,21 @@ using CentroDeAdopcion_LaEsperanza.Services;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CentroDeAdopcion_LaEsperanza.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddViewComponentsAsServices();
+
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+}).AddViewComponentsAsServices();
+
 
 var cloudinaryConfig = builder.Configuration.GetSection("Cloudinary");
 
@@ -18,6 +28,9 @@ var cloudinary = new Cloudinary(new Account(
 
 builder.Services.AddSingleton(cloudinary);
 builder.Services.AddScoped<CloudinaryService>();
+
+builder.Services.AddScoped<PasswordHasher<Usuario>>();
+
 
 builder.Services.AddDbContext<CentroDeAdopcionContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CentroDeAdopcionContext")));

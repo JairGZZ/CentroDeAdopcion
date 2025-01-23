@@ -8,6 +8,7 @@ namespace CentroDeAdopcion_LaEsperanza.ViewComponents
     public class ProfilePictureViewComponent : ViewComponent
     {
         private readonly CentroDeAdopcionContext _context;
+        private const string DefaultImageUrl = "/imagenes/user.png";
 
         public ProfilePictureViewComponent(CentroDeAdopcionContext context)
         {
@@ -16,21 +17,29 @@ namespace CentroDeAdopcion_LaEsperanza.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var userEmail = UserClaimsPrincipal.FindFirst(ClaimTypes.Email)?.Value;
-            string imageUrl = "/imagenes/user.png"; 
+            string imageUrl = DefaultImageUrl;
 
-            if (!string.IsNullOrEmpty(userEmail))
+            try
             {
-                var usuario = await _context.Usuarios
-                    .AsNoTracking()
-                    .Where(u => u.Email == userEmail)
-                    .Select(u => u.FotoUrl)
-                    .FirstOrDefaultAsync();
+                var userEmail = UserClaimsPrincipal?.FindFirst(ClaimTypes.Email)?.Value;
 
-                if (!string.IsNullOrEmpty(usuario))
+                if (!string.IsNullOrEmpty(userEmail))
                 {
-                    imageUrl = usuario;
+                    var usuario = await _context.Usuarios
+                        .AsNoTracking()
+                        .Where(u => u.Email == userEmail)
+                        .Select(u => u.FotoUrl)
+                        .FirstOrDefaultAsync();
+
+                    if (!string.IsNullOrEmpty(usuario))
+                    {
+                        imageUrl = usuario;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error obteniendo la foto de perfil: {ex.Message}");
             }
 
             return View("Default", imageUrl);

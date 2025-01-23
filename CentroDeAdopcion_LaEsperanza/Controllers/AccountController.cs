@@ -1,11 +1,9 @@
 ﻿using CentroDeAdopcion_LaEsperanza.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using CentroDeAdopcion_LaEsperanza.DB_Context;
-using CentroDeAdopcion_LaEsperanza.Models;
 
 namespace CentroDeAdopcion_LaEsperanza.Controllers
 {
@@ -57,7 +55,13 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
 
                 TempData["Mensaje"] = "Foto de perfil actualizada exitosamente.";
 
-                return RedirectToAction("Index", "Mascotas");
+                var previousUrl = Request.Headers["Referer"].ToString();
+                if (!string.IsNullOrEmpty(previousUrl))
+                {
+                    return Redirect(previousUrl);
+                }
+
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {

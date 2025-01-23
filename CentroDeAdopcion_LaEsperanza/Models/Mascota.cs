@@ -19,6 +19,8 @@ public partial class Mascota
 
     public string? Sexo { get; set; }
 
+    [Required(ErrorMessage = "Ingrese el estado de salud de la Mascota")]
+
     public string? EstadoSalud { get; set; }
 
     public string? Estado { get; set; }
