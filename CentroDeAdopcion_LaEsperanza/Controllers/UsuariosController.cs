@@ -38,24 +38,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             return View(await listar.ToListAsync());
         }
         
-        // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.IdUsuario == id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
-            return View(usuario);
-        }
-
+       
         // GET: Usuarios/Create
         public IActionResult Create()
         {

@@ -37,24 +37,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
             return View(await centroDeAdopcionContext.ToListAsync());
         }
 
-        //// GET: Mascotas/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var mascota = await _context.Mascotas
-        //        .Include(m => m.IdPropietarioNavigation)
-        //        .FirstOrDefaultAsync(m => m.IdMascota == id);
-        //    if (mascota == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(mascota);
-        //}
+     
 
         // GET: Mascotas/Create
         public IActionResult Create()

@@ -1,64 +1,79 @@
 ﻿@model CentroDeAdopcion_LaEsperanza.Models.Usuario
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Usuario";
 }
 
-<h1>Edit</h1>
+<h1 class="text-center text-white mb-4">Editar Usuario</h1>
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdUsuario" />
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
-                <input asp-for="Rol" class="form-control" />
-                <span asp-validation-for="Rol" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Contrasena" class="control-label"></label>
-                <input asp-for="Contrasena" class="form-control" />
-                <span asp-validation-for="Contrasena" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Edit" class="p-4 rounded bg-dark">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdUsuario" />
+
+                <!-- Nombre -->
+                <div class="mb-3">
+                    <label asp-for="Nombre" class="form-label text-white">Nombre</label>
+                    <input asp-for="Nombre" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <!-- Apellido -->
+                <div class="mb-3">
+                    <label asp-for="Apellido" class="form-label text-white">Apellido</label>
+                    <input asp-for="Apellido" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Apellido" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label text-white">Email</label>
+                    <input asp-for="Email" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="mb-3">
+                    <label asp-for="Telefono" class="form-label text-white">Teléfono</label>
+                    <input asp-for="Telefono" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+
+                <!-- Dirección -->
+                <div class="mb-3">
+                    <label asp-for="Direccion" class="form-label text-white">Dirección</label>
+                    <input asp-for="Direccion" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+
+                <!-- Rol -->
+                <div class="mb-3">
+                    <label asp-for="Rol" class="form-label text-white">Rol</label>
+                    <input asp-for="Rol" class="form-control bg-dark text-white" />
+                    <span asp-validation-for="Rol" class="text-danger"></span>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="mb-3">
+                    <label asp-for="Contrasena" class="form-label text-white">Contraseña</label>
+                    <input asp-for="Contrasena" class="form-control bg-dark text-white" type="password" />
+                    <span asp-validation-for="Contrasena" class="text-danger"></span>
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary me-2">Guardar Cambios</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

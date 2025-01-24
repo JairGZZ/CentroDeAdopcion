@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="mb-4 text-center">Editar Mascota</h1>
+<h1 class="mb-4 text-center text-white">Editar Mascota</h1>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -16,15 +16,15 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Nombre" class="control-label"></label>
-                            <input asp-for="Nombre" class="form-control" />
+                            <label asp-for="Nombre" class="control-label text-white">Nombre</label>
+                            <input asp-for="Nombre" class="form-control bg-dark text-white" />
                             <span asp-validation-for="Nombre" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Tipo" class="control-label">Seleccione la especie de la mascota</label>
-                            <select asp-for="Tipo" class="form-control" >
+                            <label asp-for="Tipo" class="control-label text-white">Seleccione la especie de la mascota</label>
+                            <select asp-for="Tipo" class="form-control bg-dark text-white">
                                 <option value="gato">Gato</option>
                                 <option value="perro">Perro</option>
                             </select>
@@ -36,15 +36,15 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Raza" class="control-label"></label>
-                            <input asp-for="Raza" class="form-control" />
+                            <label asp-for="Raza" class="control-label text-white">Raza</label>
+                            <input asp-for="Raza" class="form-control bg-dark text-white" />
                             <span asp-validation-for="Raza" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Edad" class="control-label"></label>
-                            <input asp-for="Edad" class="form-control" />
+                            <label asp-for="Edad" class="control-label text-white">Edad</label>
+                            <input asp-for="Edad" class="form-control bg-dark text-white" />
                             <span asp-validation-for="Edad" class="text-danger"></span>
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Tamaño" class="control-label">Seleccione el tamaño de la mascota</label>
-                            <select asp-for="Tamaño" class="form-control" >
+                            <label asp-for="Tamaño" class="control-label text-white">Seleccione el tamaño de la mascota</label>
+                            <select asp-for="Tamaño" class="form-control bg-dark text-white">
                                 <option value="pequeño">Pequeño</option>
                                 <option value="mediano">Mediano</option>
                                 <option value="grande">Grande</option>
@@ -64,32 +64,29 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="Sexo" class="control-label">Seleccione el sexo de la mascota</label>
-                            <select asp-for="Sexo" class="form-control">
+                            <label asp-for="Sexo" class="control-label text-white">Seleccione el sexo de la mascota</label>
+                            <select asp-for="Sexo" class="form-control bg-dark text-white">
                                 <option value="macho">Macho</option>
                                 <option value="hembra">Hembra</option>
                             </select>
                             <span asp-validation-for="Sexo" class="text-danger"></span>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label asp-for="EstadoSalud" class="control-label"></label>
-                            <input asp-for="EstadoSalud" class="form-control" />
+                            <label asp-for="EstadoSalud" class="control-label text-white">Estado de Salud</label>
+                            <input asp-for="EstadoSalud" class="form-control bg-dark text-white" />
                             <span asp-validation-for="EstadoSalud" class="text-danger"></span>
                         </div>
                     </div>
 
-
-
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label for="Foto">Foto (opcional)</label>
-                            <input type="file" class="form-control" id="Foto" name="fotoFile" />
+                            <label for="Foto" class="control-label text-white">Foto (opcional)</label>
+                            <input type="file" class="form-control bg-dark text-white" id="Foto" name="fotoFile" />
                             @if (!string.IsNullOrEmpty(Model.Foto))
                             {
                                 <img src="@Model.Foto" alt="Foto actual" class="img-thumbnail mt-2" style="max-width: 150px; height: auto;" />
@@ -98,11 +95,17 @@
                     </div>
                 </div>
 
-
-
                 <div class="form-group mt-4 text-center">
                     <input type="submit" value="Guardar Cambios" class="btn btn-primary me-2" />
-                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+                    @if (User.IsInRole("propietario"))
+                    {
+                        <a asp-action="ListarMascotasPropietario" class="btn btn-secondary">Cancelar</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                    })
                 </div>
             </form>
         </div>

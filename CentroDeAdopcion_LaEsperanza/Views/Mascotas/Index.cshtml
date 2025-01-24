@@ -16,8 +16,12 @@
     <div class="app-content-actions">
         <form asp-controller="Mascotas" asp-action="Index" class="search-bar-container">
             <input class="search-bar" name="buscar" placeholder="Buscar por tipo o sexo..." type="text">
+            <br /><br />
             <button class="app-content-headerButton">Buscar</button>
+            
+
         </form>
+      
         <div class="app-content-actions-wrapper">
             <div class="filter-button-wrapper">
                 <button class="action-button filter jsFilter">
@@ -121,51 +125,6 @@
 </div>
 
 
-<style>
-    .products-header {
-        display: flex;
-        justify-content: space-between;
-        font-weight: bold;
-        background-color: #f4f4f4;
-        padding: 10px;
-    }
-
-    .tableView .products-header {
-        display: flex;
-    }
-
-    .gridView .products-header {
-        display: none;
-    }
-
-    .gridView .grid-header {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-    .gridView .grid-item {
-        display: grid;
-        grid-template-columns: repeat(10, 1fr);
-        gap: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-    }
-
-    .gridView .product-cell {
-        text-align: center;
-        padding: 5px;
-    }
-
-    .tableView .products-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
 
 
 

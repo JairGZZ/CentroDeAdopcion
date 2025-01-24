@@ -1,181 +1,84 @@
-﻿    @using System.Security.Claims;
+﻿@using System.Security.Claims;
 @model IEnumerable<CentroDeAdopcion_LaEsperanza.Models.Mascota>
 
-
 @{
-    ViewData["Title"] = "Listado de Mascotas";
+    ViewData["Title"] = "Mascotas dadas en Adopción";
 }
 
+<div class="app-content">
+    <div class="app-content-header">
+        <h1 class="app-content-headerText">Mascotas dadas en Adopción</h1>
+        <button class="mode-switch" title="Switch Theme">
+            <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+        </button>
+    </div>
 
-<title>@ViewData["Title"]</title>
-<style>
-    body {
-        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-        font-family: 'Jost', sans-serif;
-        padding: 0;
-        margin: 0;
-    }
+    <div class="app-content-actions">
+        <a asp-action="Create" class="app-content-headerButton">Crear Nueva Mascota</a>
 
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-    }
+        <div class="app-content-actions-wrapper">
+            <button class="action-button list active" title="List View" onclick="changeView('list')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+                    <line x1="8" y1="6" x2="21" y2="6" />
+                    <line x1="8" y1="12" x2="21" y2="12" />
+                    <line x1="8" y1="18" x2="21" y2="18" />
+                    <line x1="3" y1="6" x2="3.01" y2="6" />
+                    <line x1="3" y1="12" x2="3.01" y2="12" />
+                    <line x1="3" y1="18" x2="3.01" y2="18" />
+                </svg>
+            </button>
+            <button class="action-button grid" title="Grid View" onclick="changeView('grid')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                </svg>
+            </button>
+        </div>
+    </div>
 
-
-
-
-    .search {
-        position: relative;
-        box-shadow: 0 0 40px rgba(51, 51, 51, .1);
-    }
-
-        .search input {
-            height: 60px;
-            text-indent: 25px;
-            border: 2px solid #d6d4d4;
-        }
-
-
-            .search input:focus {
-                box-shadow: none;
-                border: 2px solid blue;
-            }
-
-        .search .fa-search {
-            position: absolute;
-            top: 20px;
-            left: 16px;
-        }
-
-        .search button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            height: 50px;
-            width: 110px;
-            background: #573b8a;
-        }
-
-    .container {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        margin-bottom: 30px;
-    }
-
-    .btn-primary {
-        background-color: #573b8a;
-        border: none;
-        color: #fff;
-        font-weight: bold;
-        padding: 12px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-        .btn-primary:hover {
-            background-color: #6d44b8;
-        }
-
-    .table {
-        background: #fff;
-        border-radius: 8px;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-        .table th, .table td {
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        .table thead {
-            background-color: #573b8a;
-            color: white;
-        }
-
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-
-    .img-thumbnail {
-        max-width: 100px;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .actions {
-        display: flex;
-        justify-content: center;
-    }
-
-        .actions a {
-            margin: 0 5px;
-            font-size: 14px;
-        }
-</style>
-
-<div class="container">
-    <h1>Mascotas dadas en Adopcion</h1>
-
-        <div class="d-flex justify-content-between mb-4">
-            <a asp-action="Create" class="btn btn-primary">Crear Nueva Mascota</a>
+    <div class="products-area-wrapper tableView" id="productContainer">
+        <div class="products-header">
+            <div class="product-cell image">Foto</div>
+            <div class="product-cell name">Nombre</div>
+            <div class="product-cell category">Tipo</div>
+            <div class="product-cell breed">Raza</div>
+            <div class="product-cell age">Edad</div>
+            <div class="product-cell size">Tamaño</div>
+            <div class="product-cell gender">Sexo</div>
+            <div class="product-cell health">Estado de Salud</div>
+            <div class="product-cell actions">Acciones</div>
         </div>
 
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-
-                    <th>@Html.DisplayNameFor(model => model.Foto)</th>
-                    <th>@Html.DisplayNameFor(model => model.Nombre)</th>
-                    <th>@Html.DisplayNameFor(model => model.Tipo)</th>
-                    <th>@Html.DisplayNameFor(model => model.Raza)</th>
-                    <th>@Html.DisplayNameFor(model => model.Edad)</th>
-                    <th>@Html.DisplayNameFor(model => model.Tamaño)</th>
-                    <th>@Html.DisplayNameFor(model => model.Sexo)</th>
-                    <th>@Html.DisplayNameFor(model => model.EstadoSalud)</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.Foto))
-                            {
-                                <img src="@item.Foto" alt="Foto de @item.Nombre" class="img-thumbnail" />
-                            }
-                            else
-                            {
-                                <span>No disponible</span>
-                            }
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-
-
-                        <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Raza)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Edad)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Tamaño)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
-                        <td>@Html.DisplayFor(modelItem => item.EstadoSalud)</td>
-                        <td class="actions">
-                            
-
-                                <a asp-action="Edit" asp-route-id="@item.IdMascota" class="btn btn-warning btn-sm">Editar</a>
-                                <a asp-action="Delete" asp-route-id="@item.IdMascota" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @foreach (var item in Model)
+        {
+            <div class="products-row">
+                <div class="product-cell image">
+                    @if (!string.IsNullOrEmpty(item.Foto))
+                    {
+                        <img src="@item.Foto" alt="Foto de @item.Nombre" class="img-thumbnail" />
+                    }
+                    else
+                    {
+                        <span>No disponible</span>
+                    }
+                </div>
+                <div class="product-cell name">@item.Nombre</div>
+                <div class="product-cell category">@item.Tipo</div>
+                <div class="product-cell breed">@item.Raza</div>
+                <div class="product-cell age">@item.Edad años</div>
+                <div class="product-cell size">@item.Tamaño</div>
+                <div class="product-cell gender">@item.Sexo</div>
+                <div class="product-cell health">@item.EstadoSalud</div>
+                <div class="product-cell actions">
+                    <a asp-action="Edit" asp-route-id="@item.IdMascota" class="btn btn-warning btn-sm">Editar</a>| |
+                    <a asp-action="Delete" asp-route-id="@item.IdMascota" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</a>
+                </div>
+            </div>
+        }
     </div>
 </div>
-
-
 

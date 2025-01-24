@@ -77,6 +77,13 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdMascota" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        @if (User.IsInRole("propietario"))
+        {
+            <a asp-action="ListarMascotasPropietario" class="btn btn-secondary">Cancelar</a>
+        }
+        else
+        {
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        }
     </form>
 </div>

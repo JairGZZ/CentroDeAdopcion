@@ -4,196 +4,121 @@
     ViewData["Title"] = "Crear Mascota";
 }
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-            font-family: 'Jost', sans-serif;
-            color: #fff;
-            padding: 0;
-            margin: 0;
-        }
-
-        h1, h4 {
-            text-align: center;
-            color: #fff !important;
-            background-color: #573b8a;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-control {
-            background-color: #fff;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            color: #333;
-            padding: 12px;
-            font-size: 16px;
-        }
-
-            .form-control:focus {
-                border-color: #573b8a;
-                box-shadow: 0 0 5px rgba(87, 59, 138, 0.5);
-            }
-
-        .row {
-            margin-bottom: 30px;
-        }
-
-        .btn-success {
-            background-color: #573b8a;
-            border: none;
-            color: #fff;
-            font-weight: bold;
-            padding: 12px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-            .btn-success:hover {
-                background-color: #6d44b8;
-            }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            border: none;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-            .btn-secondary:hover {
-                background-color: #5a6268;
-            }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h1>Crear Nueva Mascota</h1>
-        <hr />
-
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <form asp-action="Create" method="post" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-                    <!-- Fila de campos: Nombre y Tipo -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Nombre" class="control-label">Nombre</label>
-                                <input asp-for="Nombre" class="form-control" />
-                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Tipo" class="control-label">Tipo</label>
-                                <input asp-for="Tipo" class="form-control" />
-                                <span asp-validation-for="Tipo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fila de campos: Raza y Edad -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Raza" class="control-label">Raza</label>
-                                <input asp-for="Raza" class="form-control" />
-                                <span asp-validation-for="Raza" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Edad" class="control-label">Edad</label>
-                                <input asp-for="Edad" class="form-control" type="number" />
-                                <span asp-validation-for="Edad" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fila de campos: Tamaño y Sexo -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Tamaño" class="control-label">Tamaño</label>
-                                <input asp-for="Tamaño" class="form-control" />
-                                <span asp-validation-for="Tamaño" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="Sexo" class="control-label">Sexo</label>
-                                <input asp-for="Sexo" class="form-control" />
-                                <span asp-validation-for="Sexo" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Fila de campos: EstadoSalud y Foto -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label asp-for="EstadoSalud" class="control-label">Estado de Salud</label>
-                                <input asp-for="EstadoSalud" class="form-control" />
-                                <span asp-validation-for="EstadoSalud" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fotoFile" class="control-label">Foto</label>
-                                <input type="file" id="fotoFile" name="fotoFile" class="form-control" />
-                                <span asp-validation-for="Foto" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-        
-
-                    <!-- Botón de envío -->
-                    <div class="form-group text-center">
-                        <input type="submit" value="Crear" class="btn btn-success btn-lg" />
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
+<style>
+    body, .app-content {
+        overflow-x: hidden; /* Elimina la barra de scroll horizontal */
     }
 
-</body>
-</html>
+    .form-container {
+        max-width: 100%; /* Asegura que el contenedor no se desborde */
+        padding: 15px;   /* Ajusta los paddings para que se vea bien */
+        margin: 0 auto;  /* Centra el formulario en la pantalla */
+    }
+
+    .form-container input, .form-container label {
+        word-wrap: break-word; /* Evita que el contenido se desborde */
+    }
+</style>
+
+<div class="app-content">
+    <div class="app-content-header">
+        <h1 class="app-content-headerText text-white">Crear Nueva Mascota</h1>
+    </div>
+
+    <div class="products-area-wrapper formView">
+        <div class="form-container">
+            <form asp-action="Create" method="post" enctype="multipart/form-data" class="form-style">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- Fila de campos: Nombre y Tipo -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Nombre" class="control-label text-white">Nombre</label>
+                            <input asp-for="Nombre" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="Nombre" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Tipo" class="control-label text-white">Tipo</label>
+                            <input asp-for="Tipo" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="Tipo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila de campos: Raza y Edad -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Raza" class="control-label text-white">Raza</label>
+                            <input asp-for="Raza" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="Raza" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Edad" class="control-label text-white">Edad</label>
+                            <input asp-for="Edad" class="form-control text-white bg-dark" type="number" />
+                            <span asp-validation-for="Edad" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila de campos: Tamaño y Sexo -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Tamaño" class="control-label text-white">Tamaño</label>
+                            <input asp-for="Tamaño" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="Tamaño" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Sexo" class="control-label text-white">Sexo</label>
+                            <input asp-for="Sexo" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="Sexo" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila de campos: EstadoSalud y Foto -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="EstadoSalud" class="control-label text-white">Estado de Salud</label>
+                            <input asp-for="EstadoSalud" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="EstadoSalud" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="fotoFile" class="control-label text-white">Foto</label>
+                            <input type="file" id="fotoFile" name="fotoFile" class="form-control text-white bg-dark" />
+                            <span asp-validation-for="Foto" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de envío -->
+                <div class="form-group text-center mt-4">
+                    <input type="submit" value="Crear" class="btn btn-success btn-lg app-content-headerButton" />
+                </div>
+            </form>
+
+            <!-- Botón para volver -->
+            <div class="text-center mt-4">
+                @if(User.IsInRole("propietario"))
+                {
+                    <a asp-action="ListarMascotasPropietario" class="btn btn-secondary app-content-headerButton">Volver al listado</a>
+                }
+                else
+                {
+                    <a asp-action="Index" class="btn btn-secondary app-content-headerButton">Volver al listado</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

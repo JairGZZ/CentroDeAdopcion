@@ -1,168 +1,51 @@
-﻿-- Crear la base de datos CentroDeAdopcion
-USE [master]
+﻿-- Crear base de datos
+CREATE DATABASE CentroDeAdopcion;
 GO
 
-CREATE DATABASE [CentroDeAdopcion]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'CentroDeAdopcion', FILENAME = N'C:\SQLData\CentroDeAdopcion.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'CentroDeAdopcion_log', FILENAME = N'C:\SQLData\CentroDeAdopcion_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
-GO
-
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-BEGIN
-    EXEC [CentroDeAdopcion].[dbo].[sp_fulltext_database] @action = 'enable'
-END
-GO
-
-ALTER DATABASE [CentroDeAdopcion] SET ANSI_NULL_DEFAULT OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET ANSI_NULLS OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET ANSI_PADDING OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET ANSI_WARNINGS OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET ARITHABORT OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET AUTO_CLOSE OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET AUTO_SHRINK OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET AUTO_UPDATE_STATISTICS ON 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET CURSOR_DEFAULT  GLOBAL 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET NUMERIC_ROUNDABORT OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET QUOTED_IDENTIFIER OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET RECURSIVE_TRIGGERS OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET  DISABLE_BROKER 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET TRUSTWORTHY OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET HONOR_BROKER_PRIORITY OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET RECOVERY SIMPLE 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET  MULTI_USER 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET PAGE_VERIFY CHECKSUM  
-GO
-ALTER DATABASE [CentroDeAdopcion] SET DB_CHAINING OFF 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET DELAYED_DURABILITY = DISABLED 
-GO
-ALTER DATABASE [CentroDeAdopcion] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-GO
-ALTER DATABASE [CentroDeAdopcion] SET QUERY_STORE = ON
-GO
-ALTER DATABASE [CentroDeAdopcion] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
-GO
-ALTER DATABASE [CentroDeAdopcion] SET  READ_WRITE 
-GO
-
-USE [CentroDeAdopcion]
+USE CentroDeAdopcion;
 GO
 
 -- Crear tabla Usuarios
-CREATE TABLE [dbo].[Usuarios](
-	[id_usuario] [int] IDENTITY(1,1) NOT NULL,
-	[nombre] [varchar](100) NULL,
-	  NULL,
-	  NULL,
-	  NULL,
-	  NULL,
-	  NOT NULL,
-	  NOT NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id_usuario] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-UNIQUE NONCLUSTERED 
-(
-	[email] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD CHECK  (([rol]='admin' OR [rol]='propietario' OR [rol]='adoptante'))
-GO
+CREATE TABLE Usuarios (
+    id_usuario INT PRIMARY KEY IDENTITY,
+    nombre NVARCHAR(100) NOT NULL,
+    apellido NVARCHAR(100) NOT NULL,
+    email NVARCHAR(100) UNIQUE NOT NULL,
+    contrasena NVARCHAR(255) NOT NULL,
+    direccion NVARCHAR(100),
+    telefono NVARCHAR(15),
+    rol NVARCHAR(20),
+    FotoUrl NVARCHAR(255)
+);
 
 -- Crear tabla Mascotas
-CREATE TABLE [dbo].[Mascotas](
-	[id_mascota] [int] IDENTITY(1,1) NOT NULL,
-	[nombre] [varchar](100) NULL,
-	  NOT NULL,
-	  NULL,
-	[edad] [int] NULL,
-	[tamaño] [varchar](10) NULL,
-	  NULL,
-	  NULL,
-	  NULL,
-	[id_propietario] [int] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id_mascota] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[Mascotas]  WITH CHECK ADD FOREIGN KEY([id_propietario])
-REFERENCES [dbo].[Usuarios] ([id_usuario])
-GO
-
-ALTER TABLE [dbo].[Mascotas]  WITH CHECK ADD CHECK  (([sexo]='hembra' OR [sexo]='macho'))
-GO
-
-ALTER TABLE [dbo].[Mascotas]  WITH CHECK ADD CHECK  (([tamaño]='grande' OR [tamaño]='mediano' OR [tamaño]='pequeño'))
-GO
-
-ALTER TABLE [dbo].[Mascotas]  WITH CHECK ADD CHECK  (([tipo]='gato' OR [tipo]='perro'))
-GO
+CREATE TABLE Mascotas (
+    id_mascota INT PRIMARY KEY IDENTITY,
+    nombre NVARCHAR(100) NOT NULL,
+    raza NVARCHAR(100),
+    tipo NVARCHAR(20),
+    sexo NVARCHAR(10),
+    tamaño NVARCHAR(10),
+    edad INT,
+    estado_salud NVARCHAR(100),
+    foto NVARCHAR(255),
+    id_propietario INT,
+    estado NVARCHAR(20) DEFAULT 'Disponible',
+    CONSTRAINT FK_Mascotas_Propietario FOREIGN KEY (id_propietario) REFERENCES Usuarios(id_usuario)
+);
 
 -- Crear tabla Adopciones
-CREATE TABLE [dbo].[Adopciones](
-	[id_adopcion] [int] IDENTITY(1,1) NOT NULL,
-	[id_mascota] [int] NULL,
-	[id_adoptante] [int] NULL,
-	[fecha_solicitud] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id_adopcion] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+CREATE TABLE Adopciones (
+    id_adopcion INT PRIMARY KEY IDENTITY,
+    fecha_solicitud DATETIME DEFAULT GETDATE(),
+    id_adoptante INT NOT NULL,
+    id_mascota INT NOT NULL,
+    CONSTRAINT FK_Adopciones_Adoptante FOREIGN KEY (id_adoptante) REFERENCES Usuarios(id_usuario),
+    CONSTRAINT FK_Adopciones_Mascota FOREIGN KEY (id_mascota) REFERENCES Mascotas(id_mascota)
+);
 
-ALTER TABLE [dbo].[Adopciones] ADD  DEFAULT (getdate()) FOR [fecha_solicitud]
-GO
+-- Índices únicos y constraints adicionales
+CREATE UNIQUE INDEX UQ_Usuarios_Email ON Usuarios(email);
 
-ALTER TABLE [dbo].[Adopciones]  WITH CHECK ADD FOREIGN KEY([id_adoptante])
-REFERENCES [dbo].[Usuarios] ([id_usuario])
-GO
-
-ALTER TABLE [dbo].[Adopciones]  WITH CHECK ADD FOREIGN KEY([id_mascota])
-REFERENCES [dbo].[Mascotas] ([id_mascota])
-GO
+-- Finalización
+PRINT 'Base de datos y tablas creadas exitosamente';
