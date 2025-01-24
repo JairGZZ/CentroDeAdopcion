@@ -1,49 +1,52 @@
 ﻿@model IEnumerable<CentroDeAdopcion_LaEsperanza.Models.Adopcione>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de Adopciones";
 }
+<div class="app-content">
+    <div class="app-content-header">
+        <h1 class="app-content-headerText">Listado de Adopciones</h1>
+        <button class="mode-switch" title="Switch Theme">
+            <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+        </button>
+    </div>
+    <div class="app-content-actions">
+        <form asp-controller="Adopciones" asp-action="Index" class="search-bar-container">
+            <input class="search-bar" name="buscar" placeholder="Buscar por nombre o raza..." type="text">
+            <button class="app-content-headerButton">Buscar</button>
+        </form>
+    </div>
 
-<h1>Index</h1>
+    <div class="products-area-wrapper tableView">
+        <div class="products-header">
+            <div class="product-cell date">Fecha de Solicitud</div>
+            <div class="product-cell name">Nombre de la Mascota</div>
+            <div class="product-cell breed">Raza</div>
+            <div class="product-cell age">Edad</div>
+            <div class="product-cell actions">Acciones</div>
+        </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Fecha de Solicitud
-            </th>
-            
-            <th>
-                Nombre de la Mascota
-            </th>
-            <th>
-                Raza
-             </th>
-            <th>
-                Edad
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaSolicitud)
-            </td>         
-            <td>
-                @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Nombre)
-            </td>
-                <td>
+        @foreach (var item in Model)
+        {
+            <div class="products-row">
+                <div class="product-cell date">
+                    @Html.DisplayFor(modelItem => item.FechaSolicitud)
+                </div>
+                <div class="product-cell name">
+                    @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Nombre)
+                </div>
+                <div class="product-cell breed">
                     @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Raza)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Edad)
-                </td>
-            <td>
-                <a asp-action="Delete" asp-route-id="@item.IdAdopcion">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </div>
+                <div class="product-cell age">
+                    @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Edad) años
+                </div>
+                <div class="product-cell actions">
+                    <a asp-action="Delete" asp-controller="Adopciones" asp-route-id="@item.IdAdopcion" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta adopción?')">Eliminar</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
