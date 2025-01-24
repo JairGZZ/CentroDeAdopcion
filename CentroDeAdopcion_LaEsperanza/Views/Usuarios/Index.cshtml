@@ -17,35 +17,64 @@
         <a asp-action="Create" class="app-content-headerButton btn btn-primary">Crear Nuevo Usuario</a>
     </div>
 
-    <div class="products-area-wrapper tableView">
-        <div class="products-header">
-            <div class="product-cell name">Nombre</div>
-            <div class="product-cell surname">Apellido</div>
-            <div class="product-cell email">Email</div>
-            <div class="product-cell phone">Teléfono</div>
-            <div class="product-cell address">Dirección</div>
-            <div class="product-cell role">Rol</div>
-            <div class="product-cell actions">Acciones</div>
-        </div>
-
-        <div class="products-rows">
-            @foreach (var item in Model)
-            {
-                <div class="products-row">
-                    <div class="product-cell name">@item.Nombre</div>
-                    <div class="product-cell surname">@item.Apellido</div>
-                    <div class="product-cell email">@item.Email</div>
-                    <div class="product-cell phone">@item.Telefono</div>
-                    <div class="product-cell address">@item.Direccion</div>
-                    <div class="product-cell role">@item.Rol</div>
-                    <div class="product-cell actions">
-
-                        <a asp-action="Edit" asp-route-id="@item.IdUsuario" class="btn btn-warning btn-sm">Editar</a> ||
-                        <a asp-action="Delete" asp-route-id="@item.IdUsuario" class="btn btn-danger btn-sm">Eliminar</a>
-                    </div>
-                </div>
-            }
-        </div>                                                           
-
-    </div>
-</div>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rol)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+    
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rol)
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdUsuario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdUsuario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdUsuario">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

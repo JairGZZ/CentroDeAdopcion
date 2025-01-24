@@ -10,11 +10,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Libreria_Online</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Libreria_Online.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-color: #212529;
+            color: #ffffff;
+        }
+
+        .card {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .text-black {
+            color: #ffffff !important;
+        }
+
+        label {
+            color: #ffffff;
+        }
+
+        .form-control {
+            background-color: #495057;
+            color: #ffffff;
+            border: 1px solid #6c757d;
+        }
+
+            .form-control::placeholder {
+                color: #adb5bd;
+            }
+
+        .btn-primary {
+            background-color: #1a73e8;
+            border-color: #1a73e8;
+        }
+
+            .btn-primary:hover {
+                background-color: #185abc;
+                border-color: #185abc;
+            }
+    </style>
 </head>
 <body>
-    <section class="vh-100" style="background-color: #eee;">
+    <section class="vh-100">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-11">
@@ -82,13 +119,10 @@
                                             <button type="submit" class="btn btn-primary btn-lg">Registrar</button>
                                         </div>
                                     </form>
-
                                 </div>
                                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                                          class="img-fluid" alt="Imagen de registro">
-
                                 </div>
                             </div>
                         </div>
@@ -99,6 +133,5 @@
     </section>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

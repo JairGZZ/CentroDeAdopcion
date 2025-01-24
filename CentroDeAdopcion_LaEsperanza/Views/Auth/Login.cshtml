@@ -25,7 +25,31 @@
     }
 
     }
+
+    /* Cambiar el color del texto a blanco */
+    body,
+    .form-label,
+    .text-white,
+    .small.fw-bold {
+        color: #ffffff !important;
+    }
+
+    /* Ajustes al fondo */
+    .bg-primary {
+        background-color: #000000 !important;
+    }
+
+    .btn-primary {
+        background-color: #1a73e8 !important;
+        border-color: #1a73e8 !important;
+    }
+
+        .btn-primary:hover {
+            background-color: #185abc !important;
+            border-color: #185abc !important;
+        }
 </style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,41 +61,35 @@
     <link rel="stylesheet" href="~/Libreria_Online.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <section class="vh-100">
+    <section class="vh-100" style="background-color: #212529;">
         <div class="container-fluid h-custom">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                          class="img-fluid" alt="Sample image">
-
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form method="post">
-
-
                         <!-- Email input -->
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="email" id="email" name="email" asp-for="Email" class="form-control form-control-lg"
+                            <input type="email" id="email" name="email" asp-for="Email" class="form-control form-control-lg bg-dark text-white"
                                    placeholder="Enter a valid email address" />
                             <label class="form-label" for="form3Example3">Email address</label>
                         </div>
 
                         <!-- Password input -->
                         <div data-mdb-input-init class="form-outline mb-3">
-                            <input type="password" id="contrasena" name="contrasena" asp-for="Contrasena" class="form-control form-control-lg"
+                            <input type="password" id="contrasena" name="contrasena" asp-for="Contrasena" class="form-control form-control-lg bg-dark text-white"
                                    placeholder="Enter password" />
                             <label class="form-label" for="form3Example4">Password</label>
                         </div>
 
-
                         <div class="text-center text-lg-start mt-4 pt-2">
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
                                     style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                                    Login
+                                Login
                             </button>
-
                         </div>
-
                     </form>
 
                     <p class="small fw-bold mt-2 pt-1 mb-0">
@@ -87,12 +105,10 @@
                 Copyright © 2020. All rights reserved.
             </div>
             <!-- Copyright -->
-
         </div>
     </section>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
 </body>
 </html>
