@@ -109,8 +109,10 @@
                 <div class="product-cell actions">
                     @if (User.IsInRole("admin"))
                     {
-                        <a asp-action="Delete" asp-controller="Mascotas" asp-route-id="@item.IdMascota" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</a>
-                    }
+<form asp-action="Delete" asp-route-id="@item.IdMascota" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar esta mascota?')">Eliminar</button>
+                    </form>                    }
                     else
                     {
                         <form asp-action="Create" asp-controller="Adopciones" method="post">

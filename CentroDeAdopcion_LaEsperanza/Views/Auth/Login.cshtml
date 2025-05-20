@@ -74,6 +74,7 @@
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="email" id="email" name="email" asp-for="Email" class="form-control form-control-lg bg-dark text-white"
                                    placeholder="Enter a valid email address" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
                             <label class="form-label" for="form3Example3">Email address</label>
                         </div>
 
@@ -81,6 +82,7 @@
                         <div data-mdb-input-init class="form-outline mb-3">
                             <input type="password" id="contrasena" name="contrasena" asp-for="Contrasena" class="form-control form-control-lg bg-dark text-white"
                                    placeholder="Enter password" />
+                            <span asp-validation-for="Contrasena" class="text-danger"></span>
                             <label class="form-label" for="form3Example4">Password</label>
                         </div>
 

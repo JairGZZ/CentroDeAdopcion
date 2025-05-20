@@ -7,6 +7,12 @@
 <div class="app-content">
     <div class="app-content-header">
         <h1 class="app-content-headerText text-white">Listado de Usuarios</h1>
+        <button class="mode-switch" title="Switch Theme">
+            <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+        </button>
     </div>
 
     <div class="app-content-actions">
@@ -17,64 +23,65 @@
         <a asp-action="Create" class="app-content-headerButton btn btn-primary">Crear Nuevo Usuario</a>
     </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rol)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    
-    <tbody>
-    
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rol)
-            </td>
-            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdUsuario">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdUsuario">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdUsuario">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="products-area-wrapper tableView" id="usuarioContainer">
+        <!-- Cabecera -->
+        <div class="products-header">
+            <div class="product-cell name">Nombre</div>
+            <div class="product-cell breed">Apellido</div>
+            <div class="product-cell category">Email</div>
+            <div class="product-cell age">Teléfono</div>
+            <div class="product-cell size">Dirección</div>
+            <div class="product-cell gender">Rol</div>
+            <div class="product-cell actions">Acciones</div>
+        </div>
+
+        <!-- Filas -->
+        @foreach (var usuario in Model)
+        {
+            <div class="products-row">
+                <div class="product-cell name">
+                    @usuario.Nombre
+                </div>
+                <div class="product-cell breed">
+                    @usuario.Apellido
+                </div>
+                <div class="product-cell category">
+                    @usuario.Email
+                </div>
+                <div class="product-cell age">
+                    @usuario.Telefono
+                </div>
+                <div class="product-cell size">
+                    @usuario.Direccion
+                </div>
+                <div class="product-cell gender">
+                    @usuario.Rol
+                </div>
+                <div class="product-cell actions">
+                    <a asp-action="Edit" asp-route-id="@usuario.IdUsuario" class="btn btn-warning btn-sm">Editar</a>
+                    <form asp-action="Delete" asp-route-id="@usuario.IdUsuario" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    // Si quieres conservar la funcionalidad de alternar vista (list/grid),
+    // puedes reutilizar la misma función changeView que ya tienes en la vista de Mascotas.
+    function changeView(view) {
+        const container = document.getElementById('usuarioContainer');
+        if (view === 'grid') {
+            container.classList.remove('tableView');
+            container.classList.add('gridView');
+        } else {
+            container.classList.remove('gridView');
+            container.classList.add('tableView');
+        }
+    }
+</script>

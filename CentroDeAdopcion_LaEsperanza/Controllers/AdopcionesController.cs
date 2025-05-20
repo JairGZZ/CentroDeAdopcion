@@ -123,24 +123,7 @@ namespace CentroDeAdopcion_LaEsperanza.Controllers
         }
 
         // GET: Adopciones/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var adopcione = await _context.Adopciones
-                .Include(a => a.IdAdoptanteNavigation)
-                .Include(a => a.IdMascotaNavigation)
-                .FirstOrDefaultAsync(m => m.IdAdopcion == id);
-            if (adopcione == null)
-            {
-                return NotFound();
-            }
-
-            return View(adopcione);
-        }
+        
 
         // POST: Adopciones/Delete/5
         [HttpPost, ActionName("Delete")]

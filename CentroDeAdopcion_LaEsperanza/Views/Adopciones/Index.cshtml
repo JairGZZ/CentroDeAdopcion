@@ -7,7 +7,8 @@
     <div class="app-content-header">
         <h1 class="app-content-headerText">Listado de Adopciones</h1>
         <button class="mode-switch" title="Switch Theme">
-            <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+            <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
                 <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
             </svg>
         </button>
@@ -44,8 +45,13 @@
                     @Html.DisplayFor(modelItem => item.IdMascotaNavigation.Edad) años
                 </div>
                 <div class="product-cell actions">
-                    <a asp-action="Delete" asp-controller="Adopciones" asp-route-id="@item.IdAdopcion" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta adopción?')">Eliminar</a>
                 </div>
+                <form asp-action="Delete" asp-controller="Adopciones" asp-route-id="@item.IdAdopcion" method="post"
+                    style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar esta adopción?')">Eliminar</button>
+                </form>
+
             </div>
         }
     </div>

@@ -5,18 +5,25 @@
 }
 
 <style>
-    body, .app-content {
-        overflow-x: hidden; /* Elimina la barra de scroll horizontal */
+    body,
+    .app-content {
+        overflow-x: hidden;
+        /* Elimina la barra de scroll horizontal */
     }
 
     .form-container {
-        max-width: 100%; /* Asegura que el contenedor no se desborde */
-        padding: 15px;   /* Ajusta los paddings para que se vea bien */
-        margin: 0 auto;  /* Centra el formulario en la pantalla */
+        max-width: 100%;
+        /* Asegura que el contenedor no se desborde */
+        padding: 15px;
+        /* Ajusta los paddings para que se vea bien */
+        margin: 0 auto;
+        /* Centra el formulario en la pantalla */
     }
 
-    .form-container input, .form-container label {
-        word-wrap: break-word; /* Evita que el contenido se desborde */
+    .form-container input,
+    .form-container label {
+        word-wrap: break-word;
+        /* Evita que el contenido se desborde */
     }
 </style>
 
@@ -42,7 +49,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Tipo" class="control-label text-white">Tipo</label>
-                            <input asp-for="Tipo" class="form-control text-white bg-dark" />
+                            <select asp-for="Tipo" class="form-control bg-dark text-white">
+                                <option value="gato">Gato</option>
+                                <option value="perro">Perro</option>
+                            </select>
                             <span asp-validation-for="Tipo" class="text-danger"></span>
                         </div>
                     </div>
@@ -71,14 +81,21 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Tamaño" class="control-label text-white">Tamaño</label>
-                            <input asp-for="Tamaño" class="form-control text-white bg-dark" />
+                            <select asp-for="Tamaño" class="form-control bg-dark text-white">
+                                <option value="pequeño">Pequeño</option>
+                                <option value="mediano">Mediano</option>
+                                <option value="grande">Grande</option>
+                            </select>
                             <span asp-validation-for="Tamaño" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Sexo" class="control-label text-white">Sexo</label>
-                            <input asp-for="Sexo" class="form-control text-white bg-dark" />
+                            <select asp-for="Sexo" class="form-control bg-dark text-white">
+                                <option value="macho">Macho</option>
+                                <option value="hembra">Hembra</option>
+                            </select>
                             <span asp-validation-for="Sexo" class="text-danger"></span>
                         </div>
                     </div>
@@ -110,9 +127,10 @@
 
             <!-- Botón para volver -->
             <div class="text-center mt-4">
-                @if(User.IsInRole("propietario"))
+                @if (User.IsInRole("propietario"))
                 {
-                    <a asp-action="ListarMascotasPropietario" class="btn btn-secondary app-content-headerButton">Volver al listado</a>
+                    <a asp-action="ListarMascotasPropietario" class="btn btn-secondary app-content-headerButton">Volver al
+                        listado</a>
                 }
                 else
                 {
