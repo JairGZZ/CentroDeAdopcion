@@ -1,0 +1,142 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null; // Cambia esto si usas un layout global
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>About</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffdd57;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #ffdd57;
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 15px 0;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            margin: 20px auto;
+            border-radius: 8px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Acerca de este proyecto</h1>
+        <p>Este proyecto es una plataforma completa para gestionar adopciones de mascotas, diseñada con el objetivo de conectar personas interesadas en adoptar con mascotas que necesitan un hogar. A continuación, se detallan las principales funcionalidades:</p>
+
+        <h2>Gestión de Usuarios</h2>
+        <ul>
+            <li>Base de datos para almacenar información de usuarios: nombre, dirección, rol, y foto de perfil.</li>
+            <li>Validación de datos de entrada para garantizar la calidad de la información ingresada.</li>
+            <li>Roles definidos para diferenciar entre usuarios regulares y administradores.</li>
+            <li>Cifrado seguro de contraseñas utilizando `PasswordHasher`.</li>
+        </ul>
+
+        <h2>Gestión de Mascotas</h2>
+        <ul>
+            <li>Base de datos para almacenar información sobre mascotas disponibles para adopción: raza, edad, estado de salud, etc.</li>
+            <li>Subida de imágenes a través de Cloudinary, asegurando un manejo eficiente y seguro de las fotos.</li>
+            <li>Validaciones para restringir datos como la edad de las mascotas.</li>
+        </ul>
+
+        <h2>Gestión de Adopciones</h2>
+        <ul>
+            <li>Relaciones entre tablas mediante Entity Framework Core, conectando mascotas y usuarios con adopciones.</li>
+            <li>Automatización de fechas de solicitud para mejorar la trazabilidad.</li>
+            <li>Validaciones estrictas para asegurar integridad en las adopciones registradas.</li>
+        </ul>
+
+        <h2>Seguridad y Autenticación</h2>
+        <ul>
+            <li>Sistema de autenticación basado en cookies para gestionar sesiones de usuario.</li>
+            <li>Protección contra ataques CSRF mediante `AntiForgeryToken` en las vistas.</li>
+            <li>Expiración configurada de las sesiones para mayor seguridad.</li>
+        </ul>
+
+        <h2>Gestión de Errores</h2>
+        <ul>
+            <li>Página personalizada para errores 404.</li>
+            <li>Manejo de excepciones en controladores y servicios para evitar interrupciones en la aplicación.</li>
+        </ul>
+
+        <h2>Capa de Servicios</h2>
+        <ul>
+            <li>Servicios especializados como `CloudinaryService` para abstraer lógica de subida de imágenes.</li>
+            <li>Inyección de dependencias para mejorar la escalabilidad y mantenibilidad del código.</li>
+        </ul>
+
+        <h2>Mejoras en la Experiencia de Usuario</h2>
+        <ul>
+            <li>Componente de vista para mostrar fotos de perfil de los usuarios de forma dinámica.</li>
+            <li>Diseño responsivo para garantizar compatibilidad con múltiples dispositivos.</li>
+        </ul>
+
+        <h2>Arquitectura y Configuración General</h2>
+        <ul>
+            <li>Arquitectura MVC para mantener una separación clara de responsabilidades.</li>
+            <li>Integración con SQL Server mediante Entity Framework Core.</li>
+            <li>Configuraciones basadas en `IConfiguration` para gestionar secretos y cadenas de conexión.</li>
+        </ul>
+        <h2>Codigo Fuente</h2>
+        <ul>
+            <a  href="https://github.com/JairGZZ/CentroDeAdopcion">
+                Presione para ir al repositorio
+            </a>
+            
+        </ul>
+
+        <div class="footer">
+            <p>&copy; 2025 JairGZ. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>
